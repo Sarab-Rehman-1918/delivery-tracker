@@ -1,0 +1,105 @@
+### ─── VARIABLES ───────────────────────────
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YWQ0ODI5MTM4ODNmNmZkMzFhZjljYiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc3Mjk2Mzg4MSwiZXhwIjoxNzczNTY4NjgxfQ.B6rnEeqRVgAnMgPSGdl_MSWAIeTewqCXETLCQbXnp58
+@orderId = 69ad4a3413883f6fd31af9e3
+@trackingId = TRK-MMHL8A49-X0M1D
+
+
+### ─── TEST 1: Register Customer ───────────
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Customer",
+  "email": "custoer@test.com",
+  "password": "password123",
+  "role": "customer",
+  "phone": "03001234567"
+}
+
+
+### ─── TEST 2: Register Driver ──────────────
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Ali Driver",
+  "email": "driver@test.com",
+  "password": "password123",
+  "role": "driver",
+  "phone": "03007654321"
+}
+
+
+### ─── TEST 3: Login ────────────────────────
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer@test.com",
+  "password": "password123"
+}
+
+
+### ─── TEST 4: Get Profile ──────────────────
+GET {{baseUrl}}/api/auth/profile
+Authorization: Bearer {{token}}
+
+
+### ─── TEST 5: Create Order ─────────────────
+POST {{baseUrl}}/api/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "pickupLocation": {
+    "address": "McDonalds Gulberg Lahore",
+    "lat": 31.5204,
+    "lng": 74.3587
+  },
+  "dropLocation": {
+    "address": "DHA Phase 5 Lahore",
+    "lat": 31.4816,
+    "lng": 74.4013
+  },
+  "orderDetails": {
+    "items": "Burger, Fries, Drink",
+    "totalAmount": 1500
+  }
+}
+
+
+### ─── TEST 6: Track Order ──────────────────
+GET {{baseUrl}}/api/orders/track/{{trackingId}}
+
+
+### ─── TEST 7: Update Order Status ──────────
+PUT {{baseUrl}}/api/orders/{{orderId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "on_the_way"
+}
+
+### Create Order
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "pickupLocation": {
+    "address": "Johar Town Lahore",
+    "lat": 31.5204,
+    "lng": 74.3587
+  },
+  "dropLocation": {
+    "address": "DHA Phase 5 Lahore",
+    "lat": 31.4800,
+    "lng": 74.4000
+  },
+  "orderDetails": {
+    "items": "2x Pizza",
+    "totalAmount": 1500
+  }
+}
