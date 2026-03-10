@@ -11,11 +11,18 @@ const orderRoutes = require('./src/routes/order.routes')
 const app    = express()
 const server = http.createServer(app)
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://delivery-tracker-frontend1.vercel.app',
-  'https://delivery-tracker-frontend1-2ugwarflb.vercel.app',  // ← add this
-]
+// Allow all Vercel preview URLs + localhost
+const allowedOrigins = (origin, callback) => {
+  if (
+    !origin ||
+    origin.includes('localhost') ||
+    origin.includes('vercel.app')
+  ) {
+    callback(null, true)
+  } else {
+    callback(new Error('Not allowed by CORS'))
+  }
+}
 
 const io = new Server(server, {
   cors: {
