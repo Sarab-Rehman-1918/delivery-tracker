@@ -14,6 +14,7 @@ const server = http.createServer(app)
 const allowedOrigins = [
   'http://localhost:5173',
   'https://delivery-tracker-frontend1.vercel.app',
+  'https://delivery-tracker-frontend1-g2zwsus6l.vercel.app',  // ← add this
 ]
 
 const io = new Server(server, {
