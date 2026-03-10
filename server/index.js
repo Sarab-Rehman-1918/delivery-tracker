@@ -1,7 +1,7 @@
 require('dotenv').config()
-const express  = require('express')
-const http     = require('http')
-const cors     = require('cors')
+const express    = require('express')
+const http       = require('http')
+const cors       = require('cors')
 const { Server } = require('socket.io')
 const connectDB  = require('./src/config/db')
 const initializeSockets = require('./src/sockets/index')
@@ -11,10 +11,8 @@ const orderRoutes = require('./src/routes/order.routes')
 const app    = express()
 const server = http.createServer(app)
 
-// ← THIS FIXES CORS PERMANENTLY
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests from localhost, vercel.app, or no origin (mobile/postman)
     if (
       !origin ||
       origin.includes('localhost') ||
@@ -29,9 +27,7 @@ const corsOptions = {
   credentials: true,
 }
 
-const io = new Server(server, {
-  cors: corsOptions,
-})
+const io = new Server(server, { cors: corsOptions })
 
 // Connect databases
 connectDB()
@@ -39,8 +35,6 @@ connectDB()
 // Middleware
 app.use(cors(corsOptions))
 app.use(express.json())
-
-// Handle preflight requests
 app.options('*', cors(corsOptions))
 
 // Routes
@@ -57,7 +51,7 @@ app.get('/', (req, res) => {
 
 // Keep Render awake
 setInterval(() => {
-  fetch(`https://delivery-tracker-backend-psu2.onrender.com`)
+  fetch('https://delivery-tracker-backend-psu2.onrender.com')
     .then(() => console.log('🏃 Keeping server awake'))
     .catch(() => {})
 }, 14 * 60 * 1000)
