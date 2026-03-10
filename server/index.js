@@ -13,7 +13,7 @@ const server = http.createServer(app)
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://delivery-tracker-frontend.vercel.app',
+  'https://delivery-tracker-frontend1.vercel.app',
 ]
 
 const io = new Server(server, {
@@ -33,6 +33,7 @@ app.use(require('cors')({ origin: allowedOrigins }))
 // Routes
 app.use('/api/auth',   authRoutes)
 app.use('/api/orders', orderRoutes)
+
 
 // Initialize sockets
 initializeSockets(io)
