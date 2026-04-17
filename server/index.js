@@ -35,7 +35,7 @@ connectDB()
 // Middleware
 app.use(cors(corsOptions))
 app.use(express.json())
-app.options('*', cors(corsOptions))
+app.options('/{*path}', cors(corsOptions))
 
 // Routes
 app.use('/api/auth',   authRoutes)
